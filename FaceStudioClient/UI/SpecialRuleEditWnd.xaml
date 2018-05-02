@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="FaceStudioClient.UI.SpecialRuleEditWnd"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:FaceStudioClient.UI"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <materialDesign:PackIcon Width="36" Height="36" Kind="Clock" Foreground="Teal" Margin="1" VerticalAlignment="Center" />
+                <TextBlock FontSize="24" VerticalAlignment="Center" Margin="1">考勤规则</TextBlock>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <Button Margin="2" x:Name="btnClose">返回</Button>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" x:Name="gridContent">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="0" Grid.Column="0" FontSize="28" Margin="8" HorizontalAlignment="Right">名称</Label>
+            <TextBox Grid.Row="0" Grid.Column="1" FontSize="28" Margin="8" Width="280" HorizontalAlignment="Left" Text="{Binding Name}"></TextBox>
+            <Label Grid.Row="1" Grid.Column="0" FontSize="28" Margin="8" HorizontalAlignment="Right">上班时间</Label>
+            <materialDesign:TimePicker Grid.Row="1" Grid.Column="1" FontSize="24" Is24Hours="True" Width="160" HorizontalAlignment="Left" Margin="8" Text="{Binding StartTime}" />
+            <Label Grid.Row="2" Grid.Column="0" FontSize="28" Margin="8" HorizontalAlignment="Right">下班时间</Label>
+            <materialDesign:TimePicker Grid.Row="2" Grid.Column="1" FontSize="24" Is24Hours="True" Width="160" HorizontalAlignment="Left" Margin="8" Text="{Binding EndTime}" />
+            <Label Grid.Row="3" Grid.Column="0" FontSize="28" Margin="8" HorizontalAlignment="Right">起始日期</Label>
+            <DatePicker Grid.Row="3" Grid.Column="1" FontSize="28" Margin="8" SelectedDate="{Binding StartDate}"></DatePicker>
+            <Label Grid.Row="4" Grid.Column="0" FontSize="28" Margin="8" HorizontalAlignment="Right">结束日期</Label>
+            <DatePicker Grid.Row="4" Grid.Column="1" FontSize="28" Margin="8" SelectedDate="{Binding EndDate}"></DatePicker>
+            <Label Grid.Row="5" Grid.Column="0" FontSize="28" Margin="8" HorizontalAlignment="Right">性质</Label>
+            <ComboBox Grid.Row="5" Grid.Column="1" FontSize="28" Margin="8"></ComboBox>
+            <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button FontSize="24" Height="48" Margin="8" x:Name="btnOK">确定</Button>
+                <Button FontSize="24" Height="48" Margin="8" x:Name="btnCancel">取消</Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
