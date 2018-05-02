@@ -122,7 +122,7 @@ namespace Face.Web.Models
     }
 
     // 设备参数 
-    public class DevicePara
+    public class DeviceConfig
     {
         // 数据类型是否需要修改？？？
         /*
@@ -137,41 +137,39 @@ namespace Face.Web.Models
          */
 
         // 公司名称 
-        public string company { get; set; }
+        public string companyName { get; set; }
         // 识别距离：0~6. 0无限制
-        public int identifydistance { get; set; }
+        public int identifyDistance { get; set; }
         // 识别阈值 60~100, 80 default
-        public int identifyscore { get; set; }
+        public int identifyScores { get; set; }
         // set to 0
         public int saveIdentifyTime { get; set; }
         // 语音播报模式：1:不播报  2:播报名字   100:自定义
-        public int ttsMode { get; set; }
-        public string ttsContent { get; set; }
+        public int ttsModType { get; set; }
+        public string ttsModContent { get; set; }
         // 1 or 100
-        public int displayMode { get; set; }
+        public int displayModType { get; set; }
         // 自定义显示内容
-        public string displayContent { get; set; }
+        public string displayModContent { get; set; }
         // 串口模式：1：开门；2：不输出；3：输出人员id；4：输出ID好，100：自定义。
-        public int serialportmode { get; set; }
-        public string serialportContent { get; set; }
-        // bool or enum
-        public string screendirection { get; set; }
+        public int comModType { get; set; }
+        public string comModContent { get; set; }
+        //// bool or enum
+        //public string screendirection { get; set; }
         // 公司标语 
         public string slogan { get; set; }
-        // 改成图片数据类型
-        public string logo { get; set; }
         // 公司简介
-        public string memo { get; set; }
+        public string intro { get; set; }
         // 陌生人开关 1:不识别；2：识别
-        public int strangerMode { get; set; }
+        public int recStrangerType { get; set; }
         // default : 3
-        public string strangerTimeThreshold { get; set; }
+        public string recStrangerTimesThreshold { get; set; }
         //不播报 1, 播报2, 自定义100
-        public string ttsStrangerMode { get; set; }
-        public string ttsStrangerContent { get; set; }
+        public string ttsModStrangerType { get; set; }
+        public string ttsModStrangerContent { get; set; }
 
         // 多人脸检测：默认1， 2：只识别最大人脸
-        public int multiFaceDetect { get; set; }
+        public int multiplayerDetection { get; set; }
     };
 
     public class Device
@@ -190,7 +188,7 @@ namespace Face.Web.Models
         public string DeviceName { get; set; }
         public string staticipaddr { get; set; }
         public string remarks { get; set; }
-        public DevicePara parameters { get; set; }
+        public DeviceConfig parameters { get; set; }
 
     }
 

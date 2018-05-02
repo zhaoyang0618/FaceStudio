@@ -57,7 +57,7 @@ namespace Face.Web.Service
          *  设备管理接口 3.3
          ***************************/
         // 3.3.1 setConfig 设备属性配置 
-        public event Action<ServiceResult<DevicePara>> OnSetConfigCompleted;
+        public event Action<ServiceResult<DeviceConfig>> OnSetConfigCompleted;
         // 3.3.2 changeLogo 参数类型需要修改或者不需要输入参数
         public event Action<ServiceResult<string>> OnChangeLogoCompleted;
         // 3.3.3. getDeviceKey 获取序列号
@@ -279,19 +279,19 @@ namespace Face.Web.Service
          * 
          *************************************/
         // 3.3.1
-        public void SetConfig(string passport, string ipAddress, DevicePara para, Action<Exception> failFunc)
+        public void SetConfig(string passport, string ipAddress, DeviceConfig para, Action<Exception> failFunc)
         {
             var url = "http://" + ipAddress + ":8090/setConfig";
             //var json_para = new { para_pass = pass, config = para };
             //web.AsyncJsonPost(url, json_para, (response, cookie, exp) =>
             KeyValuePair<string, string>[] data = new KeyValuePair<string, string>[2];
             data[0] = new KeyValuePair<string, string>("pass", passport);
-            data[1] = new KeyValuePair<string, string>("config", JsonSerializer<DevicePara>.Serialize(para));
+            data[1] = new KeyValuePair<string, string>("config", JsonSerializer<DeviceConfig>.Serialize(para));
             web.Post(data, url, (response, exp) => 
             {
                 if (null != response)
                 {
-                    var ret = JsonSerializer<ServiceResult<DevicePara>>.Deserialize(response);
+                    var ret = JsonSerializer<ServiceResult<DeviceConfig>>.Deserialize(response);
                     if (ret != null)
                     {
                         if (null != OnSetConfigCompleted)
@@ -317,34 +317,34 @@ namespace Face.Web.Service
             System.Diagnostics.Debug.Assert(c != null);
             var url = string.Format("http://{0}:{1}/setConfig", c.IP, c.Port);
 
-            var para = new DevicePara()
+            var para = new DeviceConfig()
             {
-                company = c.Company,
-                displayContent = c.DisplayContent,
-                displayMode = c.DisplayMode,
-                identifydistance = c.Identifydistance,
-                identifyscore = c.Identifyscore,
-                memo = c.Memo,
-                multiFaceDetect = c.MultiFaceDetect,
+                companyName = c.Company,
+                displayModContent = c.DisplayContent,
+                displayModType = c.DisplayMode,
+                identifyDistance = c.Identifydistance,
+                identifyScores = c.Identifyscore,
+                intro = c.Memo,
+                multiplayerDetection = c.MultiFaceDetect,
                 saveIdentifyTime = c.SaveIdentifyTime,
-                screendirection = c.ScreenDirection,
-                serialportContent = c.SerialPortContent,
-                serialportmode = c.SerialPortMode,
+                //screendirection = c.ScreenDirection,
+                comModContent = c.SerialPortContent,
+                comModType = c.SerialPortMode,
                 slogan = c.Slogan,
-                strangerMode = c.StrangerMode,
-                strangerTimeThreshold = c.StrangerTimeThreshold,
-                ttsContent = c.TTSContent,
-                ttsMode = c.TTSMode,
-                ttsStrangerContent = c.TTSStrangerContent,
-                ttsStrangerMode = c.TTSStrangerMode,
+                recStrangerType = c.StrangerMode,
+                recStrangerTimesThreshold = c.StrangerTimeThreshold,
+                ttsModContent = c.TTSContent,
+                ttsModType = c.TTSMode,
+                ttsModStrangerContent = c.TTSStrangerContent,
+                ttsModStrangerType = c.TTSStrangerMode,
             };
             KeyValuePair<string, string>[] data = new KeyValuePair<string, string>[2];
             data[0] = new KeyValuePair<string, string>("pass", c.Pwd);
-            data[1] = new KeyValuePair<string, string>("config", JsonSerializer<DevicePara>.Serialize(para));
+            data[1] = new KeyValuePair<string, string>("config", JsonSerializer<DeviceConfig>.Serialize(para));
             var response = await web.Post(data, url);
             if (!string.IsNullOrEmpty(response))
             {
-                var ret = JsonSerializer<ServiceResult<DevicePara>>.Deserialize(response);
+                var ret = JsonSerializer<ServiceResult<DeviceConfig>>.Deserialize(response);
                 if (ret != null)
                 {
                     return ret.success;

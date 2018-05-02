@@ -24,7 +24,7 @@ namespace Face.Web.DAL
                 throw new Exception("设置密码失败！");
             }
 
-            var setup = new DevicePara()
+            var setup = new DeviceConfig()
             {
 
             };
