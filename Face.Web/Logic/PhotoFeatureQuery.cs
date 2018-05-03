@@ -113,6 +113,12 @@ namespace Face.Web.Logic
                         if (b)
                             break;
 
+                        if(queuePhoto.Count == 0)
+                        {
+                            System.Threading.Thread.Sleep(10);
+                            continue;
+                        }
+
                         PhotoImageQueryItem item = null;
                         lock (queueLock)
                         {

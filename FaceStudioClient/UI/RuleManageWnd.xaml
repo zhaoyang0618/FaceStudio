@@ -29,13 +29,31 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Label>常规考勤规则</Label>
+                    <Label FontSize="24">常规考勤规则</Label>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button x:Name="btnAddSpecial">添加</Button>
+                        <Button Margin="2 2 60 2" x:Name="btnAddSpecial">添加</Button>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <DataGrid x:Name="gridRule"></DataGrid>
+                    <DataGrid FontSize="20" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="2" 
+                                  CanUserReorderColumns="False" CanUserResizeColumns="True" 
+                                  CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" 
+                                  CanUserResizeRows="False" x:Name="gridRule">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="名称" Width="160" IsReadOnly="True" Binding="{Binding AttendanceRule.Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="时间段" Width="*" IsReadOnly="True" Binding="{Binding TimeInterval}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="工作日" Width="*" IsReadOnly="True" Binding="{Binding WorkDate}"></DataGridTextColumn>
+                            <DataGridTemplateColumn Header="操作" Width="160" Visibility="Collapsed">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Click="OnItemRuleEditButtonClick">编辑</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
 
             </Grid>
@@ -45,13 +63,32 @@
                     <RowDefinition></RowDefinition>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <Label>特殊考勤规则</Label>
+                    <Label FontSize="24">特殊考勤规则</Label>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button x:Name="btnAdd">添加</Button>
+                        <Button Margin="2 2 60 2" x:Name="btnAdd">添加</Button>
                     </StackPanel>
                 </Grid>
                 <Grid Grid.Row="1">
-                    <DataGrid x:Name="gridSpecialRule"></DataGrid>
+                    <DataGrid FontSize="20" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="2" 
+                                  CanUserReorderColumns="False" CanUserResizeColumns="True" 
+                                  CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" 
+                                  CanUserResizeRows="False" x:Name="gridSpecialRule">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="名称" Width="160" IsReadOnly="True" Binding="{Binding SpecialAttendanceRule.Name}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="时间段" Width="*" IsReadOnly="True" Binding="{Binding TimeInterval}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="日期" Width="*" IsReadOnly="True" Binding="{Binding DateInterval}"></DataGridTextColumn>
+                            <DataGridTextColumn Header="性质" Width="160" IsReadOnly="True" Binding="{Binding TypeString}"></DataGridTextColumn>
+                            <DataGridTemplateColumn Header="操作" Width="160" Visibility="Collapsed">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                                            <Button Click="OnItemRuleEditButtonClick">编辑</Button>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
             </Grid>
         </Grid>

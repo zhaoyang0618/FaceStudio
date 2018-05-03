@@ -14,7 +14,7 @@ namespace FaceStudioClient.Service
 
         public void Query(Action<Exception> failFunc)
         {
-            var url = "http://localhost:59710/api/Department/Query";
+            var url = "http://localhost:8888/api/Department/Query";
             web.AsyncJsonPost<string>(url, null,
                 (response, cookies, exp) =>
                 {
@@ -42,7 +42,7 @@ namespace FaceStudioClient.Service
 
         public void Save(Department entity, Action<Exception> failFunc)
         {
-            var url = "http://localhost:59710/api/Department/Save";
+            var url = "http://localhost:8888/api/Department/Save";
             web.AsyncJsonPost(url, entity,
                 (response, cookies, exp) =>
                 {

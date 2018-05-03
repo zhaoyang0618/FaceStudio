@@ -37,7 +37,7 @@ namespace FaceStudioClient.UI
             Query();
         }
 
-        private void OnItemButtonEditClick(object sender, RoutedEventArgs e)
+        private void OnItemRuleEditButtonClick(object sender, RoutedEventArgs e)
         {
             var btn = sender as Button;
             var em = btn.DataContext as EmployeeUI;

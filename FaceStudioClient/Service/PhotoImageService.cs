@@ -13,7 +13,7 @@ namespace FaceStudioClient.Service
 
         public void Upload(byte[] data, string fileName, Action<Exception> failFunc)
         {
-            var url = "http://localhost:59710/api/File/Upload";
+            var url = "http://localhost:8888/api/File/Upload";
             var para = new FileData
             {
                 Data = data,
@@ -53,7 +53,7 @@ namespace FaceStudioClient.Service
 
         public static string GetImageFileURL(Guid id)
         {
-            return string.Format("http://localhost:59710/PhotoImage/index/{0}", id);
+            return string.Format("http://localhost:8888/PhotoImage/index/{0}", id);
         }
     }
 }

@@ -44,6 +44,7 @@
     <Compile Include="AttendanceRule.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CheckinRecord.cs" />
+    <Compile Include="CheckinRecordQueryInfo.cs" />
     <Compile Include="Department.cs" />
     <Compile Include="Employee.cs" />
     <Compile Include="EmployeeCameraRelation.cs" />

@@ -235,6 +235,7 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DAL\AttendanceRuleRepository.cs" />
     <Compile Include="DAL\CameraRepository.cs" />
+    <Compile Include="DAL\CheckinRecordRepository.cs" />
     <Compile Include="DAL\DbHelper.cs" />
     <Compile Include="DAL\DepartmentRepository.cs" />
     <Compile Include="DAL\EmployeeRepository.cs" />

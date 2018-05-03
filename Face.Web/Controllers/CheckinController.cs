@@ -1,4 +1,5 @@
 ﻿using Face.Contract;
+using Face.Web.DAL;
 using Face.Web.Models;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,12 @@ namespace Face.Web.Controllers
                 ret.success = false;
             }
             return ret;
+        }
+
+        public IEnumerable<CheckinRecord> Query(CheckinRecordQueryInfo q)
+        {
+            var rep = new CheckinRecordRepository(db);
+            return rep.Get();
         }
     }
 }

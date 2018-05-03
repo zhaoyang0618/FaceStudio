@@ -47,6 +47,7 @@ namespace Face.Web.Models
         public DbSet<Camera> Cameras { get; set; }
         public DbSet<EmployeeCameraRelation> EmployeeCameraRelations { get; set; }
         public DbSet<SpecialAttendanceRule> SpecialAttendanceRules { get; set; }
+        public DbSet<CheckinRecord> CheckinRecords { get; set; }
         #endregion
     }
 }

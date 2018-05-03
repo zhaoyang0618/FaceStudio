@@ -16,7 +16,7 @@ namespace FaceStudioClient.Service
 
         public void Query(Action<Exception> failFunc)
         {
-            var url = "http://localhost:59710/api/AttendanceRule/Query";
+            var url = "http://localhost:8888/api/AttendanceRule/Query";
             web.AsyncJsonPost<string>(url, null,
                 (response, cookies, exp) =>
                 {
@@ -44,7 +44,7 @@ namespace FaceStudioClient.Service
 
         public void Save(AttendanceRule entity, Action<Exception> failFunc)
         {
-            var url = "http://localhost:59710/api/AttendanceRule/Save";
+            var url = "http://localhost:8888/api/AttendanceRule/Save";
             web.AsyncJsonPost(url, entity,
                 (response, cookies, exp) =>
                 {
@@ -72,7 +72,7 @@ namespace FaceStudioClient.Service
 
         public void QuerySpecial(Action<Exception> failFunc)
         {
-            var url = "http://localhost:59710/api/AttendanceRule/QuerySpecial";
+            var url = "http://localhost:8888/api/AttendanceRule/QuerySpecial";
             web.AsyncJsonPost<string>(url, null,
                 (response, cookies, exp) =>
                 {
@@ -100,7 +100,7 @@ namespace FaceStudioClient.Service
 
         public void SaveSpecial(SpecialAttendanceRule entity, Action<Exception> failFunc)
         {
-            var url = "http://localhost:59710/api/AttendanceRule/SaveSpecial";
+            var url = "http://localhost:8888/api/AttendanceRule/SaveSpecial";
             web.AsyncJsonPost(url, entity,
                 (response, cookies, exp) =>
                 {
