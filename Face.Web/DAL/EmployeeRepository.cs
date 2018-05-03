@@ -76,6 +76,9 @@ namespace Face.Web.DAL
                 try
                 {
                     c.PersonID = ret.data == null ? null : ret.data.id;
+                    c.FirstPhotoID = null;
+                    c.SecondPhotoID = null;
+                    c.ThirdPhotoID = null;
                     if (entity.FirstPhoto != null)
                     {
                         var photo = await service.FaceCreate(c.Camera, new faceinfo() { faceid = entity.FirstPhoto.ID.ToString(), personid = c.PersonID, imagebase64 = Utils.Base64Converter.File2String(entity.FirstPhoto.FilePath) });
@@ -87,7 +90,10 @@ namespace Face.Web.DAL
                         {
                             throw new Exception(string.Format( "上传第一张照片到设备({0})失败", c.Camera.IP));
                         }
-                        photo = await service.FaceCreate(c.Camera, new faceinfo() { faceid = entity.SecondPhoto.ID.ToString(), personid = c.PersonID, imagebase64 = Utils.Base64Converter.File2String(entity.SecondPhoto.FilePath) });
+                    }
+                    if(entity.SecondPhoto != null)
+                    {
+                        var photo = await service.FaceCreate(c.Camera, new faceinfo() { faceid = entity.SecondPhoto.ID.ToString(), personid = c.PersonID, imagebase64 = Utils.Base64Converter.File2String(entity.SecondPhoto.FilePath) });
                         if (photo.success)
                         {
                             c.SecondPhotoID = photo.data;
@@ -96,7 +102,10 @@ namespace Face.Web.DAL
                         {
                             throw new Exception(string.Format("上传第二张照片到设备({0})失败", c.Camera.IP));
                         }
-                        photo = await service.FaceCreate(c.Camera, new faceinfo() { faceid = entity.ThirdPhoto.ID.ToString(), personid = c.PersonID, imagebase64 = Utils.Base64Converter.File2String(entity.ThirdPhoto.FilePath) });
+                    }
+                    if(entity.ThirdPhoto != null)
+                    {
+                        var photo = await service.FaceCreate(c.Camera, new faceinfo() { faceid = entity.ThirdPhoto.ID.ToString(), personid = c.PersonID, imagebase64 = Utils.Base64Converter.File2String(entity.ThirdPhoto.FilePath) });
                         if (photo.success)
                         {
                             c.ThirdPhotoID = photo.data;
@@ -106,6 +115,7 @@ namespace Face.Web.DAL
                             throw new Exception(string.Format("上传第三张照片到设备({0})失败", c.Camera.IP));
                         }
                     }
+
                     c.Status = 1;
                 }
                 catch (Exception exp)

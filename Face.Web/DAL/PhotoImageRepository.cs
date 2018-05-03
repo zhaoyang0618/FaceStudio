@@ -94,5 +94,17 @@ namespace Face.Web.DAL
             file.MimeType = MimeMapping.GetMimeMapping(fileName);
             return file;
         }
+
+        /// <summary>
+        /// 只更新部分数据
+        /// </summary>
+        /// <param name="photo"></param>
+        public void UpdateFeature(PhotoImage photo, string user)
+        {
+            dbSet.Attach(photo);
+            DbHelper<PhotoImage>.DbColumnsUpdate(context, photo,
+                new String[] { "Feature", "FeatureKey" });
+            context.SaveChanges();
+        }
     }
 }

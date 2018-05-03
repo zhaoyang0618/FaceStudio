@@ -231,9 +231,28 @@ namespace Face.Web.Service
 
         }
 
+        public async Task<faceFindInfo[]> FaceFind(Camera camera, string personid)
+        {
+            var url = string.Format( "http://{0}:{1}/face/find", camera.IP, camera.Port);
+            KeyValuePair<String, String>[] data = new KeyValuePair<string, string>[2];
+            data[0] = new KeyValuePair<string, string>("pass", camera.Pwd);
+            data[1] = new KeyValuePair<string, string>("personId", personid);
+            var response = await web.Post(data, url);
+            if (null != response)
+            {
+                var ret = JsonSerializer<ServiceResult<faceFindInfo[]>>.Deserialize(response);
+                if (ret != null && ret.success)
+                {
+                    return ret.data;
+                }
+            }
+
+            return null;
+        }
+
         //3.2.7
         //public event Action<ServiceResult<DevicePara>> OnFaceFeatureRegCompleted;
-          public void FaceFind(string ipAddress, string passport, string personid, string faceid, string feature ,string featurekey, Action<Exception> failFunc)
+        public void FaceFind(string ipAddress, string passport, string personid, string faceid, string feature ,string featurekey, Action<Exception> failFunc)
         {
             var url = "http://" + ipAddress + ":8090/face/featureReg";
             KeyValuePair<String, String>[] data = new KeyValuePair<string, string>[5];

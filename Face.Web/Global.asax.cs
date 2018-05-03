@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Face.Web.Logic;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -18,6 +19,8 @@ namespace Face.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //启动一些子线程获取数据
+            PhotoFeatureQuery.Instance.RunQueryThread();
         }
     }
 }
