@@ -1,6 +1,7 @@
 ﻿using Face.Contract;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -66,10 +67,14 @@ namespace FaceStudioClient.UI
 
         #region 辅助函数
         SpecialAttendanceRule current = null;
+        ObservableCollection<KeyValuePair<int, string>> dateTypeList = new ObservableCollection<KeyValuePair<int, string>>();
 
         void InitUI()
         {
             gridContent.DataContext = current;
+            dateTypeList.Add(new KeyValuePair<int, string>(0, "工作日"));
+            dateTypeList.Add(new KeyValuePair<int, string>(1, "休息日"));
+            cboDateType.ItemsSource = dateTypeList;
         }
 
         void BindEvents()

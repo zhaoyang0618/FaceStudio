@@ -83,6 +83,8 @@ namespace Face.Contract
 
         public SpecialAttendanceRule()
         {
+            this.StartDate = DateTime.Now;
+            this.EndDate = DateTime.Now.AddDays(1);
             this.CreateTime = DateTime.Now;
             this.UpdateTime = DateTime.Now;
         }

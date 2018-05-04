@@ -46,7 +46,7 @@
             <Label Grid.Row="4" Grid.Column="0" FontSize="28" Margin="8" HorizontalAlignment="Right">结束日期</Label>
             <DatePicker Grid.Row="4" Grid.Column="1" FontSize="28" Margin="8" SelectedDate="{Binding EndDate}"></DatePicker>
             <Label Grid.Row="5" Grid.Column="0" FontSize="28" Margin="8" HorizontalAlignment="Right">性质</Label>
-            <ComboBox Grid.Row="5" Grid.Column="1" FontSize="28" Margin="8"></ComboBox>
+            <ComboBox Grid.Row="5" Grid.Column="1" FontSize="28" Margin="8" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedValue="{Binding DateType}" x:Name="cboDateType"></ComboBox>
             <StackPanel Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center">
                 <Button FontSize="24" Height="48" Margin="8" x:Name="btnOK">确定</Button>
                 <Button FontSize="24" Height="48" Margin="8" x:Name="btnCancel">取消</Button>
