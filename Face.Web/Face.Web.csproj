@@ -245,6 +245,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Logic\CheckedInRecordQuery.cs" />
     <Compile Include="Logic\PhotoFeatureQuery.cs" />
     <Compile Include="Models\AccountBindingModels.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -261,6 +262,7 @@
     <Compile Include="Service\WebHelper.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Utils\Base64Converter.cs" />
+    <Compile Include="Utils\TimeHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Areas\HelpPage\HelpPage.css" />

@@ -36,5 +36,24 @@ namespace Face.Web.DAL
             theses.OrderByDescending(t => t.ID);
             return theses.ToList();
         }
+
+        public void Add(CheckinRecord[] records)
+        {
+            //首先需要保证不存在:这里需要事务处理
+            int count = 0;
+            foreach(var rec in records)
+            {
+                var ret = Get(x => x.PersonId == rec.PersonId && x.Time == rec.Time && x.IP == rec.IP);
+                if (ret == null || ret.Count() == 0)
+                {
+                    Insert(rec);
+                    count++;
+                }
+            }
+            if(count > 0)
+            {
+                context.SaveChanges();
+            }
+        }
     }
 }

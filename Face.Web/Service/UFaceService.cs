@@ -700,6 +700,22 @@ namespace Face.Web.Service
                });
         }
 
+        public async Task<RecordsResult> findRecords(Camera camera, string personID, int length, int index, string startTime, string endTime)
+        {
+            var url = string.Format("http://{0}:{1}/findRecords?pass={2}&personId={3}&length={4}&index={5}&startTime={6}&endTime={7}", camera.IP, camera.Port, camera.Pwd, personID, length, index, startTime, endTime);
+            var response = await web.Get(url);
+            if (!string.IsNullOrEmpty(response))
+            {
+                var ret = JsonSerializer<ServiceResult<RecordsResult>>.Deserialize(response);
+                if (ret != null)
+                {
+                    return ret.data;
+                }
+            }
+
+            return null;
+        }
+
         /* 3.4.1 deleteRecords
           * 时间格式：2017-07-15 12:05:00
           * 删除指定时间前的所有记录，返回删除的数量

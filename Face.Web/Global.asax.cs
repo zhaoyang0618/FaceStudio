@@ -21,6 +21,13 @@ namespace Face.Web
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             //启动一些子线程获取数据
             PhotoFeatureQuery.Instance.RunQueryThread();
+            CheckedInRecordQuery.Instance.RunQueryThread();
+        }
+
+        protected void Application_End()
+        {
+            PhotoFeatureQuery.Instance.Exit();
+            CheckedInRecordQuery.Instance.Exit();
         }
     }
 }
