@@ -33,6 +33,12 @@ namespace Face.Contract
         }
 
         [MaxLength(64)]
+        public string OldPwd
+        {
+            get; set;
+        }
+
+        [MaxLength(64)]
         public string Pwd
         {
             get;set;

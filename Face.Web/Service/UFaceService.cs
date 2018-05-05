@@ -437,7 +437,7 @@ namespace Face.Web.Service
             System.Diagnostics.Debug.Assert(null != camera);
             var url = string.Format("http://{0}:{1}/setPassWord", camera.IP, camera.Port);
             KeyValuePair<String, String>[] data = new KeyValuePair<string, string>[2];
-            data[0] = new KeyValuePair<string, string>("oldPass", camera.Pwd);
+            data[0] = new KeyValuePair<string, string>("oldPass", camera.OldPwd);
             data[1] = new KeyValuePair<string, string>("newPass", camera.Pwd);
             var response = await web.Post(data, url);
             if (!string.IsNullOrEmpty(response))
