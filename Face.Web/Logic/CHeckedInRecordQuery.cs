@@ -73,78 +73,85 @@ namespace Face.Web.Logic
                         if (HasExit)
                             break;
 
-                        if(dictCamera == null || dictCamera.Length == 0)
+                        try
                         {
-                            //查询数据库获取相机信息
-                            var cameras = repCamera.Get();
-                            dictCamera = cameras.ToArray();
-                        }
-
-                        if (dictCamera == null)
-                        {
-                            System.Threading.Thread.Sleep(10);
-                            continue;
-                        }
-
-                        foreach (var v in dictCamera)
-                        {
-                            if (HasExit)
-                                break;
-
-                            Camera camera = v;
-                            int length = -1;
-                            int index = 0;
-                            string startTime = "0";
-                            string endTime = "0";
-                            var now = DateTime.Now;
-                            if (dictDateTime.ContainsKey(v.IP))
+                            if (dictCamera == null || dictCamera.Length == 0)
                             {
-                                //如果在deltaTime毫秒之内,不做处理
-                                var delta = now - dictDateTime[v.IP];
-                                if(delta.Minutes * 60000 + delta.Seconds * 1000 + delta.Milliseconds < deltaTime )
-                                {
-                                    continue;
-                                }
-
-                                //
-                                startTime = dictDateTime[v.IP].ToString("yyyy-MM-dd hh:mm:ss");
-                                endTime = now.ToString("yyyy-MM-dd hh:mm:ss");
-                                dictDateTime[v.IP] = now;
+                                //查询数据库获取相机信息
+                                var cameras = repCamera.Get();
+                                dictCamera = cameras.ToArray();
                             }
-                            else
-                            {
-                                dictDateTime.Add(v.IP, now);
-                            }
-                            var ret = await service.findRecords(camera, "-1", length, index, startTime, endTime);
-                            if(null != ret)
-                            {
-                                //把数据插入数据库
-                                if(null != ret.records)
-                                {
-                                    //这里面的操作都比较费时
-                                    if (HasExit)
-                                        break;
 
-                                    var lst = new List<CheckinRecord>();
-                                    foreach(var rec in ret.records)
+                            if (dictCamera == null)
+                            {
+                                System.Threading.Thread.Sleep(10);
+                                continue;
+                            }
+
+                            foreach (var v in dictCamera)
+                            {
+                                if (HasExit)
+                                    break;
+
+                                Camera camera = v;
+                                int length = -1;
+                                int index = 0;
+                                string startTime = "0";
+                                string endTime = "0";
+                                var now = DateTime.Now;
+                                if (dictDateTime.ContainsKey(v.IP))
+                                {
+                                    //如果在deltaTime毫秒之内,不做处理
+                                    var delta = now - dictDateTime[v.IP];
+                                    if (delta.Minutes * 60000 + delta.Seconds * 1000 + delta.Milliseconds < deltaTime)
                                     {
-                                        lst.Add(new CheckinRecord()
-                                        {
-                                            InnerID = rec.ID,
-                                            IP = camera.IP,
-                                            Path = rec.path,
-                                            PersonId = rec.personID,
-                                            Time = rec.time,
-                                            Type = rec.type,
-                                            State = rec.state,
-                                            CheckinTime = Utils.TimeHelper.UnixTime2DateTime(rec.time), //需要从unix时间戳转化得到
-                                        });
+                                        continue;
                                     }
-                                    rep.Add(lst.ToArray());
+
+                                    //
+                                    startTime = dictDateTime[v.IP].ToString(@"yyyy-MM-dd hh\:mm\:ss");
+                                    endTime = now.ToString(@"yyyy-MM-dd hh\:mm\:ss");
+                                    dictDateTime[v.IP] = now;
                                 }
+                                else
+                                {
+                                    dictDateTime.Add(v.IP, now);
+                                }
+                                var ret = await service.findRecords(camera, "-1", length, index, startTime, endTime);
+                                if (null != ret)
+                                {
+                                    //把数据插入数据库
+                                    if (null != ret.records)
+                                    {
+                                        //这里面的操作都比较费时
+                                        if (HasExit)
+                                            break;
+
+                                        var lst = new List<CheckinRecord>();
+                                        foreach (var rec in ret.records)
+                                        {
+                                            lst.Add(new CheckinRecord()
+                                            {
+                                                InnerID = rec.ID,
+                                                IP = camera.IP,
+                                                Path = rec.path,
+                                                PersonId = rec.personID,
+                                                Time = rec.time,
+                                                Type = rec.type,
+                                                State = rec.state,
+                                                CheckinTime = Utils.TimeHelper.UnixTime2DateTime(rec.time), //需要从unix时间戳转化得到
+                                            });
+                                        }
+                                        rep.Add(lst.ToArray());
+                                    }
+                                }
+                                //
+                                System.Threading.Thread.Sleep(10);
                             }
-                            //
-                            System.Threading.Thread.Sleep(10);
+                        }
+                        catch (Exception exp)
+                        {
+                            System.Diagnostics.Debug.WriteLine(exp);
                         }
 
                         System.Threading.Thread.Sleep(10);

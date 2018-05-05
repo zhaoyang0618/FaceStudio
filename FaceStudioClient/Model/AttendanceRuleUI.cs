@@ -23,7 +23,7 @@ namespace FaceStudioClient.Model
             get
             {
                 if (AttendanceRule == null) return null;
-                return string.Format("{0} - {1}", AttendanceRule.StartTime.ToString("hh:mm"), AttendanceRule.EndTime.ToString("hh:mm"));
+                return string.Format("{0} - {1}", AttendanceRule.StartTime.ToString(@"hh\:mm"), AttendanceRule.EndTime.ToString(@"hh\:mm"));
             }
         }
 

@@ -221,11 +221,14 @@ namespace Face.Contract
         public Camera()
         {
             this.EmployeeCameraRelations = new List<EmployeeCameraRelation>();
+            this.Port = 8090;
+            this.OldPwd = "12345";
+            this.Pwd = "12345";
             this.Identifyscore = 80;
             this.TTSMode = 100;
-            this.TTSContent = "{name}，欢迎光临";
+            this.TTSContent = "{name}欢迎光临";
             this.DisplayMode = 100;
-            this.DisplayContent = "{name}，签到成功！";
+            this.DisplayContent = "{name}签到成功";
             this.SerialPortMode = 1;
             this.StrangerMode = 1;
             this.StrangerTimeThreshold = "3";

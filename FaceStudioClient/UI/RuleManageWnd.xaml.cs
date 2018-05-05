@@ -78,7 +78,7 @@ namespace FaceStudioClient.UI
             var rule = new AttendanceRule();
             var wnd = new RuleEditWnd(rule);
             wnd.OnClose += () => {
-                //
+                Query();
                 gridSub.Children.Clear();
                 gridSub.Visibility = Visibility.Collapsed;
                 gridMain.Visibility = Visibility.Visible;

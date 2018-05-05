@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Face.Web.DAL
@@ -15,7 +16,7 @@ namespace Face.Web.DAL
         {
         }
 
-        public void Create(Employee entity)
+        public async Task Create(Employee entity)
         {
             entity.ID = Guid.NewGuid();
             var adapter = context as IObjectContextAdapter;
@@ -47,7 +48,7 @@ namespace Face.Web.DAL
                     if (c.Camera != null)
                     {
                         //首先需要在设备上添加数据
-                        CreatePersonToCamera(entity, c);
+                        await CreatePersonToCamera(entity, c);
 
                         if (c.Camera.ID != Guid.Empty)
                         {
@@ -68,7 +69,7 @@ namespace Face.Web.DAL
         }
 
         Service.UFaceService service = new Service.UFaceService();
-        async void CreatePersonToCamera(Employee entity, EmployeeCameraRelation c)
+        async Task CreatePersonToCamera(Employee entity, EmployeeCameraRelation c)
         {
             var ret = await service.personCreate(c.Camera, new Person() { id = entity.Code, idcardnum = entity.IDCard, name = entity.Name });
             if (ret.success)

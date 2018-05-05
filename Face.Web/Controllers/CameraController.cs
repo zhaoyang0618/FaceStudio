@@ -4,6 +4,7 @@ using Face.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 //using System.Web.Mvc;
@@ -21,7 +22,7 @@ namespace Face.Web.Controllers
         internal ApplicationDbContext db = new ApplicationDbContext();
         // POST api/Department/Create
         [Route("Save")]
-        public Camera Save(Camera entity)
+        public async Task<Camera> Save(Camera entity)
         {
             if (entity == null)
                 return null;
@@ -31,7 +32,7 @@ namespace Face.Web.Controllers
                 var rep = new CameraRepository(db);
                 if (entity.ID == Guid.Empty)
                 {
-                    rep.Create(entity);
+                    await rep.Create(entity);
                     //entity.ID = Guid.NewGuid();
                     //entity.CreateUser = HttpContext.Current.User.Identity.Name;
                     //entity.UpdateUser = HttpContext.Current.User.Identity.Name;

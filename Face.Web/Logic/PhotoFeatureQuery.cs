@@ -113,7 +113,7 @@ namespace Face.Web.Logic
                         if (b)
                             break;
 
-                        if(queuePhoto.Count == 0)
+                        if (queuePhoto.Count == 0)
                         {
                             System.Threading.Thread.Sleep(10);
                             continue;
@@ -126,25 +126,33 @@ namespace Face.Web.Logic
                         }
 
                         if (item == null) continue;
-                        //查询数据
-                        var list = await service.FaceFind(item.Camera, item.PersonID);
-                        if(list != null && list.Length > 0)
+
+                        try
                         {
-                            //找到对应的;然后更新
-                            foreach(var v in list)
+                            //查询数据
+                            var list = await service.FaceFind(item.Camera, item.PersonID);
+                            if (list != null && list.Length > 0)
                             {
-                                if(string.Compare( v.faceId, item.FaceID) == 0)
+                                //找到对应的;然后更新
+                                foreach (var v in list)
                                 {
-                                    var photo = new PhotoImage()
+                                    if (string.Compare(v.faceId, item.FaceID) == 0)
                                     {
-                                        ID = item.PhotoImageID,
-                                        Feature = v.feature,
-                                        FeatureKey = v.featureKey,
-                                    };
-                                    rep.UpdateFeature(photo, null);
-                                    break;
+                                        var photo = new PhotoImage()
+                                        {
+                                            ID = item.PhotoImageID,
+                                            Feature = v.feature,
+                                            FeatureKey = v.featureKey,
+                                        };
+                                        rep.UpdateFeature(photo, null);
+                                        break;
+                                    }
                                 }
                             }
+                        }
+                        catch (Exception exp)
+                        {
+                            System.Diagnostics.Debug.WriteLine(exp);
                         }
                         //
                         System.Threading.Thread.Sleep(10);

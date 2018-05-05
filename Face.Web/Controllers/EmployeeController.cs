@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 //using System.Web.Mvc;
@@ -23,7 +24,7 @@ namespace Face.Web.Controllers
         internal ApplicationDbContext db = new ApplicationDbContext();
 
         [Route("Save")]
-        public Employee Save(Employee entity)
+        public async Task<Employee> Save(Employee entity)
         {
             if (entity == null)
                 return null;
@@ -77,7 +78,7 @@ namespace Face.Web.Controllers
                     //entity.UpdateUser = HttpContext.Current.User.Identity.Name;
                     //rep.Insert(entity);
                     //db.SaveChanges();
-                    rep.Create(entity);
+                    await rep.Create(entity);
                     PhotoFeatureQuery.Instance.AddEmployee(entity);
                 }
                 else

@@ -339,34 +339,39 @@ namespace Face.Web.Service
             var para = new DeviceConfig()
             {
                 companyName = c.Company,
-                displayModContent = c.DisplayContent,
+                displayModContent = c.DisplayContent == null ? string.Empty : c.DisplayContent,
                 displayModType = c.DisplayMode,
                 identifyDistance = c.Identifydistance,
                 identifyScores = c.Identifyscore,
-                intro = c.Memo,
+                intro = c.Memo == null ? string.Empty : c.Memo,
                 multiplayerDetection = c.MultiFaceDetect,
                 saveIdentifyTime = c.SaveIdentifyTime,
                 //screendirection = c.ScreenDirection,
-                comModContent = c.SerialPortContent,
+                comModContent = c.SerialPortContent == null ? string.Empty : c.SerialPortContent,
                 comModType = c.SerialPortMode,
-                slogan = c.Slogan,
+                slogan = c.Slogan == null ? string.Empty : c.Slogan,
                 recStrangerType = c.StrangerMode,
                 recStrangerTimesThreshold = c.StrangerTimeThreshold,
-                ttsModContent = c.TTSContent,
+                ttsModContent = c.TTSContent == null ? string.Empty : c.TTSContent,
                 ttsModType = c.TTSMode,
-                ttsModStrangerContent = c.TTSStrangerContent,
+                ttsModStrangerContent = c.TTSStrangerContent == null ? string.Empty : c.TTSStrangerContent,
                 ttsModStrangerType = c.TTSStrangerMode,
             };
+            var config = JsonSerializer<DeviceConfig>.Serialize(para);
+            System.Diagnostics.Debug.WriteLine(config);
             KeyValuePair<string, string>[] data = new KeyValuePair<string, string>[2];
             data[0] = new KeyValuePair<string, string>("pass", c.Pwd);
-            data[1] = new KeyValuePair<string, string>("config", JsonSerializer<DeviceConfig>.Serialize(para));
+            data[1] = new KeyValuePair<string, string>("config", config);
             var response = await web.Post(data, url);
+            System.Diagnostics.Debug.WriteLine("+++++SetConfig++++");
             if (!string.IsNullOrEmpty(response))
             {
                 var ret = JsonSerializer<ServiceResult<DeviceConfig>>.Deserialize(response);
                 if (ret != null)
                 {
-                    return ret.success;
+                    if (ret.success)
+                        return true;
+                    throw new Exception(ret.msg);
                 }
             }
 
@@ -440,6 +445,7 @@ namespace Face.Web.Service
             data[0] = new KeyValuePair<string, string>("oldPass", camera.OldPwd);
             data[1] = new KeyValuePair<string, string>("newPass", camera.Pwd);
             var response = await web.Post(data, url);
+            System.Diagnostics.Debug.WriteLine("+++++SetPassword++++");
             if (!string.IsNullOrEmpty(response))
             {
                 var ret = JsonSerializer<ServiceResult<string>>.Deserialize(response);

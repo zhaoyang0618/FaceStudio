@@ -17,5 +17,10 @@ namespace Face.Contract
         {
             get;set;
         }
+
+        public string msg
+        {
+            get;set;
+        }
     }
 }

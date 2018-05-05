@@ -3,6 +3,7 @@ using Face.Web.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Face.Web.DAL
@@ -14,7 +15,7 @@ namespace Face.Web.DAL
         {
         }
 
-        public async void Create(Camera entity)
+        public async Task Create(Camera entity)
         {
             entity.ID = Guid.NewGuid();
             //
@@ -24,16 +25,13 @@ namespace Face.Web.DAL
                 throw new Exception("设置密码失败！");
             }
 
-            var setup = new DeviceConfig()
-            {
-
-            };
-
             ret = await service.SetConfig(entity);
             if (!ret)
             {
                 throw new Exception("配置参数失败！");
             }
+
+            System.Diagnostics.Debug.WriteLine("+++++++++");
 
             //
             entity.CreateTime = DateTime.Now;

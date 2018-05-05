@@ -10,7 +10,7 @@ namespace Face.Web.Utils
         public static DateTime UnixTime2DateTime(long time)
         {
             var startTime = new System.DateTime(1970, 1, 1);//TimeZone.CurrentTimeZone.ToLocalTime();
-            var TranslateDate = startTime.AddSeconds(time);
+            var TranslateDate = startTime.AddMilliseconds(time);
             return TranslateDate;
         }
 
