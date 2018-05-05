@@ -41,6 +41,7 @@ namespace Face.Web.DAL
                 adapter.ObjectContext.AttachTo("AttendanceRules", entity.AttendanceRule);
             }
 
+            var list = new List<Camera>();
             if (entity.Cameras != null)
             {
                 foreach (var c in entity.Cameras)
@@ -52,7 +53,9 @@ namespace Face.Web.DAL
 
                         if (c.Camera.ID != Guid.Empty)
                         {
-                            adapter.ObjectContext.AttachTo("Cameras", c.Camera);
+                            list.Add(c.Camera);
+                            c.Camera = null;
+                            //adapter.ObjectContext.AttachTo("Cameras", c.Camera);
                         }
                         else
                         {
@@ -66,6 +69,20 @@ namespace Face.Web.DAL
             entity.UpdateUser = HttpContext.Current.User.Identity.Name;
             Insert(entity);
             context.SaveChanges();
+            if (entity.Cameras != null)
+            {
+                foreach (var c in entity.Cameras)
+                {
+                    foreach(var l in list)
+                    {
+                        if(c.CameraID == l.ID)
+                        {
+                            c.Camera = l;
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         Service.UFaceService service = new Service.UFaceService();
@@ -122,6 +139,7 @@ namespace Face.Web.DAL
                 catch (Exception exp)
                 {
                     System.Diagnostics.Debug.WriteLine(exp);
+                    throw exp;
                 }
                 //
 
