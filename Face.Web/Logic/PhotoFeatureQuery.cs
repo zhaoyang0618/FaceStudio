@@ -41,49 +41,49 @@ namespace Face.Web.Logic
             }
         }
 
-        public void AddEmployee(Employee employee)
+        public void AddEmployee(PhotoImageQueryItem[] list)
         {
-            if (employee == null) return;
-            List<PhotoImageQueryItem> list = new List<PhotoImageQueryItem>();
-            if(employee.Cameras != null && employee.Cameras.Count > 0)
-            {
-                var c = employee.Cameras[0];
-                if(!string.IsNullOrEmpty(c.FirstPhotoID))
-                {
-                    var item = new PhotoImageQueryItem()
-                    {
-                        Camera = c.Camera,
-                        PersonID = c.PersonID,
-                        FaceID = c.FirstPhotoID,
-                        PhotoImageID = employee.FirstPhoto.ID,
-                    };
-                    list.Add(item);
-                }
-                if (!string.IsNullOrEmpty(c.SecondPhotoID))
-                {
-                    var item = new PhotoImageQueryItem()
-                    {
-                        Camera = c.Camera,
-                        PersonID = c.PersonID,
-                        FaceID = c.SecondPhotoID,
-                        PhotoImageID = employee.SecondPhoto.ID,
-                    };
-                    list.Add(item);
-                }
-                if (!string.IsNullOrEmpty(c.ThirdPhotoID))
-                {
-                    var item = new PhotoImageQueryItem()
-                    {
-                        Camera = c.Camera,
-                        PersonID = c.PersonID,
-                        FaceID = c.ThirdPhotoID,
-                        PhotoImageID = employee.ThirdPhoto.ID,
-                    };
-                    list.Add(item);
-                }
-            }
+            if (list == null) return;
+            //List<PhotoImageQueryItem> list = new List<PhotoImageQueryItem>();
+            //if(employee.Cameras != null && employee.Cameras.Count > 0)
+            //{
+            //    var c = employee.Cameras[0];
+            //    if(!string.IsNullOrEmpty(c.FirstPhotoID))
+            //    {
+            //        var item = new PhotoImageQueryItem()
+            //        {
+            //            Camera = c.Camera,
+            //            PersonID = c.PersonID,
+            //            FaceID = c.FirstPhotoID,
+            //            PhotoImageID = employee.FirstPhoto.ID,
+            //        };
+            //        list.Add(item);
+            //    }
+            //    if (!string.IsNullOrEmpty(c.SecondPhotoID))
+            //    {
+            //        var item = new PhotoImageQueryItem()
+            //        {
+            //            Camera = c.Camera,
+            //            PersonID = c.PersonID,
+            //            FaceID = c.SecondPhotoID,
+            //            PhotoImageID = employee.SecondPhoto.ID,
+            //        };
+            //        list.Add(item);
+            //    }
+            //    if (!string.IsNullOrEmpty(c.ThirdPhotoID))
+            //    {
+            //        var item = new PhotoImageQueryItem()
+            //        {
+            //            Camera = c.Camera,
+            //            PersonID = c.PersonID,
+            //            FaceID = c.ThirdPhotoID,
+            //            PhotoImageID = employee.ThirdPhoto.ID,
+            //        };
+            //        list.Add(item);
+            //    }
+            //}
 
-            if (list.Count == 0)
+            if (list.Length == 0)
                 return;
 
             lock (queueLock)

@@ -16,7 +16,7 @@ namespace Face.Web.DAL
         {
         }
 
-        public async Task Create(Employee entity)
+        public async Task<PhotoImageQueryItem[]> Create(Employee entity)
         {
             entity.ID = Guid.NewGuid();
             var adapter = context as IObjectContextAdapter;
@@ -41,7 +41,8 @@ namespace Face.Web.DAL
                 adapter.ObjectContext.AttachTo("AttendanceRules", entity.AttendanceRule);
             }
 
-            var list = new List<Camera>();
+            //var list = new List<Camera>();
+            PhotoImageQueryItem[] photoes = null;
             if (entity.Cameras != null)
             {
                 foreach (var c in entity.Cameras)
@@ -49,11 +50,11 @@ namespace Face.Web.DAL
                     if (c.Camera != null)
                     {
                         //首先需要在设备上添加数据
-                        await CreatePersonToCamera(entity, c);
+                        photoes = await CreatePersonToCamera(entity, c);
 
                         if (c.Camera.ID != Guid.Empty)
                         {
-                            list.Add(c.Camera);
+                            //list.Add(c.Camera);
                             c.Camera = null;
                             //adapter.ObjectContext.AttachTo("Cameras", c.Camera);
                         }
@@ -69,25 +70,27 @@ namespace Face.Web.DAL
             entity.UpdateUser = HttpContext.Current.User.Identity.Name;
             Insert(entity);
             context.SaveChanges();
-            if (entity.Cameras != null)
-            {
-                foreach (var c in entity.Cameras)
-                {
-                    foreach(var l in list)
-                    {
-                        if(c.CameraID == l.ID)
-                        {
-                            c.Camera = l;
-                            break;
-                        }
-                    }
-                }
-            }
+            return photoes;
+            //if (entity.Cameras != null)
+            //{
+            //    foreach (var c in entity.Cameras)
+            //    {
+            //        foreach(var l in list)
+            //        {
+            //            if(c.CameraID == l.ID)
+            //            {
+            //                c.Camera = l;
+            //                break;
+            //            }
+            //        }
+            //    }
+            //}
         }
 
         Service.UFaceService service = new Service.UFaceService();
-        async Task CreatePersonToCamera(Employee entity, EmployeeCameraRelation c)
+        async Task<PhotoImageQueryItem[]> CreatePersonToCamera(Employee entity, EmployeeCameraRelation c)
         {
+            List<PhotoImageQueryItem> list = new List<PhotoImageQueryItem>();
             var ret = await service.personCreate(c.Camera, new Person() { id = entity.Code, idcardnum = entity.IDCard, name = entity.Name });
             if (ret.success)
             {
@@ -99,10 +102,22 @@ namespace Face.Web.DAL
                     c.ThirdPhotoID = null;
                     if (entity.FirstPhoto != null)
                     {
-                        var photo = await service.FaceCreate(c.Camera, new faceinfo() { faceid = entity.FirstPhoto.ID.ToString(), personid = c.PersonID, imagebase64 = Utils.Base64Converter.File2String(entity.FirstPhoto.FilePath) });
+                        var fi = new faceinfo() {
+                            faceid = entity.FirstPhoto.ID.ToString().Replace("-",""),
+                            personid = c.PersonID,
+                            imagebase64 = Utils.Base64Converter.File2String(entity.FirstPhoto.FilePath) };
+                        var photo = await service.FaceCreate(c.Camera, fi);
                         if (photo.success)
                         {
-                            c.FirstPhotoID = photo.data;
+                            c.FirstPhotoID = fi.faceid;
+                            var item = new PhotoImageQueryItem()
+                            {
+                                Camera = c.Camera,
+                                PersonID = c.PersonID,
+                                FaceID = c.FirstPhotoID,
+                                PhotoImageID = entity.FirstPhoto.ID,
+                            };
+                            list.Add(item);
                         }
                         else
                         {
@@ -111,10 +126,22 @@ namespace Face.Web.DAL
                     }
                     if(entity.SecondPhoto != null)
                     {
-                        var photo = await service.FaceCreate(c.Camera, new faceinfo() { faceid = entity.SecondPhoto.ID.ToString(), personid = c.PersonID, imagebase64 = Utils.Base64Converter.File2String(entity.SecondPhoto.FilePath) });
+                        var fi = new faceinfo() {
+                            faceid = entity.SecondPhoto.ID.ToString().Replace("-",""),
+                            personid = c.PersonID,
+                            imagebase64 = Utils.Base64Converter.File2String(entity.SecondPhoto.FilePath) };
+                        var photo = await service.FaceCreate(c.Camera, fi);
                         if (photo.success)
                         {
-                            c.SecondPhotoID = photo.data;
+                            c.SecondPhotoID = fi.faceid;
+                            var item = new PhotoImageQueryItem()
+                            {
+                                Camera = c.Camera,
+                                PersonID = c.PersonID,
+                                FaceID = c.SecondPhotoID,
+                                PhotoImageID = entity.SecondPhoto.ID,
+                            };
+                            list.Add(item);
                         }
                         else
                         {
@@ -123,10 +150,22 @@ namespace Face.Web.DAL
                     }
                     if(entity.ThirdPhoto != null)
                     {
-                        var photo = await service.FaceCreate(c.Camera, new faceinfo() { faceid = entity.ThirdPhoto.ID.ToString(), personid = c.PersonID, imagebase64 = Utils.Base64Converter.File2String(entity.ThirdPhoto.FilePath) });
+                        var fi = new faceinfo() {
+                            faceid = entity.ThirdPhoto.ID.ToString().Replace("-",""),
+                            personid = c.PersonID,
+                            imagebase64 = Utils.Base64Converter.File2String(entity.ThirdPhoto.FilePath) };
+                        var photo = await service.FaceCreate(c.Camera, fi);
                         if (photo.success)
                         {
-                            c.ThirdPhotoID = photo.data;
+                            c.ThirdPhotoID = fi.faceid;
+                            var item = new PhotoImageQueryItem()
+                            {
+                                Camera = c.Camera,
+                                PersonID = c.PersonID,
+                                FaceID = c.ThirdPhotoID,
+                                PhotoImageID = entity.ThirdPhoto.ID,
+                            };
+                            list.Add(item);
                         }
                         else
                         {
@@ -144,6 +183,8 @@ namespace Face.Web.DAL
                 //
 
             }
+
+            return list.ToArray();
         }
     }
 }

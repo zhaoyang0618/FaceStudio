@@ -78,8 +78,8 @@ namespace Face.Web.Controllers
                     //entity.UpdateUser = HttpContext.Current.User.Identity.Name;
                     //rep.Insert(entity);
                     //db.SaveChanges();
-                    await rep.Create(entity);
-                    PhotoFeatureQuery.Instance.AddEmployee(entity);
+                    var list = await rep.Create(entity);
+                    PhotoFeatureQuery.Instance.AddEmployee(list);
                 }
                 else
                 {
