@@ -70,5 +70,61 @@ namespace Face.Web.Controllers
             db.SaveChanges();
             return entiry;
         }
+
+        [Route("ChangeLogo")]
+        public async Task<IHttpActionResult> ChangeLogo(Camera camera)
+        {
+            //此时需要保证camera.Logo必须存在数据
+            if (camera == null || camera.Logo == null)
+                return BadRequest();
+
+            if (!System.IO.File.Exists(camera.Logo.FilePath))
+                return InternalServerError(new Exception("Logo图片不存在!"));
+
+            try
+            {
+                //这里可能还需要保存这个Logo数据
+                var rep = new CameraRepository(db);
+                var ret = await rep.ChangeLogo(camera);
+                if(ret)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return InternalServerError(new Exception("更新失败!"));
+                }
+            }
+            catch (Exception exp)
+            {
+                return InternalServerError(exp);
+            }
+        }
+
+        [Route("RestartDevice")]
+        public async Task<IHttpActionResult> RestartDevice(Camera camera)
+        {
+            //此时需要保证camera.Logo必须存在数据
+            if (camera == null)
+                return BadRequest();
+
+            try
+            {
+                var rep = new CameraRepository(db);
+                var ret = await rep.RestartDevice(camera);
+                if (ret)
+                {
+                    return Ok();
+                }
+                else
+                {
+                    return InternalServerError(new Exception("重启设备失败!"));
+                }
+            }
+            catch (Exception exp)
+            {
+                return InternalServerError(exp);
+            }
+        }
     }
 }

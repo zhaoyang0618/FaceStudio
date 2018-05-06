@@ -407,6 +407,27 @@ namespace Face.Web.Service
                });
 
         }
+
+        //3.3.2  图片怎么传参数？？？？
+        public async Task<bool> ChangeLogo(Camera camera)
+        {
+            if (null == camera || null == camera.Logo)
+                return false;
+            string imgBase64 = Utils.Base64Converter.File2String(camera.Logo.FilePath);
+            var url = string.Format("http://{0}:{1}/changeLogo?pass={2}&imgBase64={3}", camera.IP, camera.Port, camera.Pwd, imgBase64);
+            var response = await web.Get(url);
+            if (null != response)
+            {
+                var ret = JsonSerializer<ServiceResult<string>>.Deserialize(response);
+                if (ret != null)
+                {
+                    return ret.success;
+                }
+            }
+
+            return false;
+        }
+
         //3.3.3 
         public void GetDeviceKey(string pass, string ipAddress, Action<Exception> failFunc)
         {
@@ -600,6 +621,24 @@ namespace Face.Web.Service
                    }
                });
         }
+
+        //3.3.9 重启设备
+        public async Task<bool> RestartDevice(Camera camera)
+        {
+            var url = string.Format("http://{0}:{1}/restartDevice?pass={2}", camera.IP, camera.Port, camera.Pwd);
+            var response = await web.Get(url);
+            if (!string.IsNullOrEmpty(response))
+            {
+                var ret = JsonSerializer<ServiceResult<string>>.Deserialize(response);
+                if (ret != null)
+                {
+                    return ret.success;
+                }
+            }
+
+            return false;
+        }
+
         //3.3.12 setTime:Unix毫秒级时间戳
         public void Reset(string passport, string ipAddress, string time, Action<Exception> failFunc)
         {

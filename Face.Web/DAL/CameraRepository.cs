@@ -43,5 +43,27 @@ namespace Face.Web.DAL
         }
 
         Service.UFaceService service = new Service.UFaceService();
+
+        public async Task<bool> ChangeLogo(Camera camera)
+        {
+            if (camera == null || camera.Logo == null)
+                return false;
+            //更新设备
+            var ret = await service.ChangeLogo(camera);
+            //保存数据
+            camera.PhotoImageID = camera.Logo.ID;
+            camera.UpdateTime = DateTime.Now;
+            camera.Logo = null;
+            dbSet.Attach(camera);
+            DbHelper<Camera>.DbColumnsUpdate(context, camera,
+                new String[] { "PhotoImageID", "UpdateTime" });
+            context.SaveChanges();
+            return ret;
+        }
+
+        public async Task<bool> RestartDevice(Camera camera)
+        {
+            return await service.RestartDevice(camera);
+        }
     }
 }

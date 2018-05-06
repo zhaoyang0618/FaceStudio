@@ -11,6 +11,8 @@ namespace FaceStudioClient.Service
     {
         public event Action<Camera[]> OnQueryCompleted;
         public event Action<Camera> OnSaveCompleted;
+        public event Action OnChangeLogoCompleted;
+        public event Action OnRestartDeviceCompleted;
 
         public void Query(Action<Exception> failFunc)
         {
@@ -64,6 +66,52 @@ namespace FaceStudioClient.Service
                     else if (null != exp)
                     {
                         failFunc(exp);
+                    }
+                });
+        }
+
+        public void ChangeLogo(Camera entity, Action<Exception> failFunc)
+        {
+            var url = "http://localhost:8888/api/Camera/ChangeLogo";
+            web.AsyncJsonPost(url, entity,
+                (response, cookies, exp) =>
+                {
+                    if (null != response)
+                    {
+                        if (OnChangeLogoCompleted != null)
+                            OnChangeLogoCompleted();
+                    }
+                    else if (null != exp)
+                    {
+                        failFunc(exp);
+                    }
+                    else
+                    {
+                        if (OnChangeLogoCompleted != null)
+                            OnChangeLogoCompleted();
+                    }
+                });
+        }
+
+        public void RestartDevice(Camera entity, Action<Exception> failFunc)
+        {
+            var url = "http://localhost:8888/api/Camera/RestartDevice";
+            web.AsyncJsonPost(url, entity,
+                (response, cookies, exp) =>
+                {
+                    if (null != response)
+                    {
+                        if (OnRestartDeviceCompleted != null)
+                            OnRestartDeviceCompleted();
+                    }
+                    else if (null != exp)
+                    {
+                        failFunc(exp);
+                    }
+                    else
+                    {
+                        if (OnRestartDeviceCompleted != null)
+                            OnRestartDeviceCompleted();
                     }
                 });
         }
