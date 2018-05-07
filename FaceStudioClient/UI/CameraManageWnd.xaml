@@ -32,7 +32,10 @@
                     </ListBox.ItemsPanel>
                     <ListBox.ItemTemplate>
                         <DataTemplate>
-                            <materialDesign:Card>
+                            <Grid>
+                                <local:CameraViewWnd DataContext="{Binding}" OnEdit="OnCameraEdit" OnDelete="OnCameraDelete" OnChangeLogo="OnCameraChangeLogo" OnRestartDevice="OnCameraRestartDevice"></local:CameraViewWnd>
+                            </Grid>
+                            <!--<materialDesign:Card>
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"></RowDefinition>
@@ -52,7 +55,7 @@
                                         <Button Grid.Column="1" Margin="4" Click="OnItemButtonDeleteClick">删除</Button>
                                     </Grid>
                                 </Grid>
-                            </materialDesign:Card>
+                            </materialDesign:Card>-->
                         </DataTemplate>
                     </ListBox.ItemTemplate>
                 </ListBox>

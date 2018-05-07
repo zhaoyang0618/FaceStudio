@@ -109,11 +109,20 @@
     <Compile Include="Service\PhotoImageService.cs" />
     <Compile Include="Service\UFaceService.cs" />
     <Compile Include="Service\WebHelper.cs" />
+    <Compile Include="UI\CameraConfigWnd.xaml.cs">
+      <DependentUpon>CameraConfigWnd.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UI\CameraEditWnd.xaml.cs">
       <DependentUpon>CameraEditWnd.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\CameraManageWnd.xaml.cs">
       <DependentUpon>CameraManageWnd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CameraSlideWnd.xaml.cs">
+      <DependentUpon>CameraSlideWnd.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UI\CameraViewWnd.xaml.cs">
+      <DependentUpon>CameraViewWnd.xaml</DependentUpon>
     </Compile>
     <Compile Include="UI\CheckManageWnd.xaml.cs">
       <DependentUpon>CheckManageWnd.xaml</DependentUpon>
@@ -163,11 +172,23 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="UI\CameraConfigWnd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="UI\CameraEditWnd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UI\CameraManageWnd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\CameraSlideWnd.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UI\CameraViewWnd.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

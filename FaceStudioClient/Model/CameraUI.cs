@@ -23,5 +23,38 @@ namespace FaceStudioClient.Model
         {
             get;set;
         }
+
+        public bool HasLogo
+        {
+            get
+            {
+                return null != this.Camera && this.Camera.Logo != null;
+            }
+        }
+
+        public bool NoLogo
+        {
+            get
+            {
+                return !HasLogo;
+            }
+        }
+
+        public string LogoURL
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        public void ChangeLogo(PhotoImage logo)
+        {
+            if (null == this.Camera || logo == null)
+                return;
+            this.Camera.Logo = logo;
+            this.Camera.PhotoImageID = logo.ID;
+
+        }
     }
 }
