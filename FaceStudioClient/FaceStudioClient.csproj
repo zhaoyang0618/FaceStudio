@@ -91,6 +91,7 @@
     <Compile Include="Converter\BufToImageConverter.cs" />
     <Compile Include="Model\AttendanceRuleUI.cs" />
     <Compile Include="Model\CameraUI.cs" />
+    <Compile Include="Model\CheckinRecordUI.cs" />
     <Compile Include="Model\DepartmentUI.cs" />
     <Compile Include="Model\EmployeeUI.cs" />
     <Compile Include="Model\PasswordSetPara.cs" />

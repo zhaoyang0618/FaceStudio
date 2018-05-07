@@ -1,6 +1,8 @@
 ﻿using Face.Contract;
+using FaceStudioClient.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,12 +49,21 @@ namespace FaceStudioClient.UI
             gridSub.Visibility = Visibility.Visible;
         }
 
+        private void OnButtonQueryClick(object sender, RoutedEventArgs e)
+        {
+            Query();
+        }
+
         #endregion
 
         #region 辅助函数
+        ObservableCollection<CheckinRecordUI> ruleList = new ObservableCollection<CheckinRecordUI>();
+        CheckinRecordQueryInfo currentQuery = new CheckinRecordQueryInfo();
+
         void InitUI()
         {
-
+            gridCheckedIn.ItemsSource = ruleList;
+            paneQuery.DataContext = currentQuery;
         }
 
         void BindEvents()
@@ -62,8 +73,38 @@ namespace FaceStudioClient.UI
                     OnClose();
             };
             btnRule.Click += OnButtonRuleClick;
+            btnQuery.Click += OnButtonQueryClick;
         }
 
+        void EnableUI(bool bEnable)
+        {
+            this.IsEnabled = bEnable;
+        }
+
+        void Query()
+        {
+            EnableUI(false);
+            var service = new Service.CheckinService();
+            service.OnQueryCompleted += (departs) => {
+                if (departs != null)
+                {
+                    this.Dispatcher.BeginInvoke(new Action<CheckinRecord[]>((list) => {
+                        ruleList.Clear();
+                        foreach (var v in list)
+                        {
+                            ruleList.Add(new CheckinRecordUI() { Record = v });
+                        }
+                        EnableUI(true);
+                    }), new object[] { departs });
+                }
+            };
+            service.Query(currentQuery, (exp) => {
+                this.Dispatcher.BeginInvoke(new Action(() => {
+                    EnableUI(true);
+                    MetroUIExtender.Alert(exp.Message);
+                }), null);
+            });
+        }
         #endregion
     }
 }

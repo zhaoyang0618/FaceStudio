@@ -43,7 +43,7 @@ namespace Face.Web.Controllers
         public IEnumerable<CheckinRecord> Query(CheckinRecordQueryInfo q)
         {
             var rep = new CheckinRecordRepository(db);
-            return rep.Get();
+            return rep.Query(q);
         }
     }
 }

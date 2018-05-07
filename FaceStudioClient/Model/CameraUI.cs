@@ -1,14 +1,24 @@
 ﻿using Face.Contract;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace FaceStudioClient.Model
 {
-    class CameraUI
+    class CameraUI : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propName)
+        {
+            if (this.PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propName));
+            }
+        }
+
         public Camera Camera
         {
             get;set;
@@ -54,7 +64,9 @@ namespace FaceStudioClient.Model
                 return;
             this.Camera.Logo = logo;
             this.Camera.PhotoImageID = logo.ID;
-
+            OnPropertyChanged("HasLogo");
+            OnPropertyChanged("NoLogo");
+            OnPropertyChanged("ChangeLogo");
         }
     }
 }

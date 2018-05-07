@@ -18,14 +18,27 @@
                     <materialDesign:PackIcon Width="36" Height="36" Kind="Clock" Foreground="#D2691E" Margin="1" VerticalAlignment="Center" />
                     <TextBlock FontSize="24" VerticalAlignment="Center" Margin="1">考勤管理</TextBlock>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" x:Name="paneQuery">
+                    <TextBox Margin="2" Text="{Binding EmployeeName}" x:Name="textName"></TextBox>
+                    <DatePicker Margin="2" SelectedDate="{Binding StartDate}" x:Name="dateStart"></DatePicker>
+                    <TextBlock Margin="2">-</TextBlock>
+                    <DatePicker Margin="2" SelectedDate="{Binding EndDate}" x:Name="dateEnd"></DatePicker>
+                    <Button Margin="2" x:Name="btnQuery">查询</Button>
                     <Button Margin="2" x:Name="btnRule">考勤规则</Button>
                     <Button Margin="2" x:Name="btnClose">返回</Button>
                 </StackPanel>
             </Grid>
             <Grid Grid.Row="1">
-                <DataGrid Margin="1">
-
+                <DataGrid FontSize="20" AutoGenerateColumns="False" HorizontalAlignment="Stretch" Margin="1" 
+                                  CanUserReorderColumns="False" CanUserResizeColumns="True" 
+                                  CanUserSortColumns="True" CanUserAddRows="False" CanUserDeleteRows="False" 
+                                  CanUserResizeRows="False" x:Name="gridCheckedIn">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="姓名" Width="240" IsReadOnly="True" Binding="{Binding Name}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="日期" Width="240" IsReadOnly="True" Binding="{Binding Date}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="考勤时间" Width="*" IsReadOnly="True" Binding="{Binding Time}"></DataGridTextColumn>
+                        <DataGridTextColumn Header="结论" Width="180" IsReadOnly="True" Binding="{Binding Result}"></DataGridTextColumn>
+                    </DataGrid.Columns>
                 </DataGrid>
             </Grid>
         </Grid>

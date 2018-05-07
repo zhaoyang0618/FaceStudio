@@ -10,6 +10,7 @@ namespace FaceStudioClient.Service
     class CheckinService : BaseService
     {
         public event Action<ServiceBaseResult> OnRecordCompleted;
+        public event Action<CheckinRecord[]> OnQueryCompleted;
 
         public void Record(Action<Exception> failFunc)
         {
@@ -35,6 +36,34 @@ namespace FaceStudioClient.Service
                             if (null != OnRecordCompleted)
                             {
                                 OnRecordCompleted(ret);
+                            }
+                        }
+                        else
+                        {
+                            failFunc(new Exception("Failed in Query Object!"));
+                        }
+                    }
+                    else if (null != exp)
+                    {
+                        failFunc(exp);
+                    }
+                });
+        }
+
+        public void Query(CheckinRecordQueryInfo query, Action<Exception> failFunc)
+        {
+            var url = "http://localhost:8888/api/Checkin/Query";
+            web.AsyncJsonPost(url, query,
+                (response, cookies, exp) =>
+                {
+                    if (null != response)
+                    {
+                        var ret = JsonSerializer<CheckinRecord[]>.Deserialize(response);
+                        if (ret != null)
+                        {
+                            if (null != OnQueryCompleted)
+                            {
+                                OnQueryCompleted(ret);
                             }
                         }
                         else
