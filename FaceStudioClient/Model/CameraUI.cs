@@ -54,7 +54,9 @@ namespace FaceStudioClient.Model
         {
             get
             {
-                return null;
+                if (null == this.Camera || this.Camera.PhotoImageID == null)
+                    return "http://localhost:8888//Images/RichVision.jpg";
+                return Service.PhotoImageService.GetImageFileURL(this.Camera.PhotoImageID.Value);
             }
         }
 
