@@ -283,30 +283,31 @@ namespace FaceStudioClient
 
         private void OnTileCheclInClick(object sender, RoutedEventArgs e)
         {
-            var wnd = new UI.CameraViewWnd();
-            //wnd.OnClose += () => {
-            //    gridSub.Children.Clear();
-            //    gridSub.Visibility = Visibility.Collapsed;
-            //    gridMain.Visibility = Visibility.Visible;
-            //};
-
-            gridSub.Children.Clear();
-            gridSub.Children.Add(wnd);
-            gridMain.Visibility = Visibility.Collapsed;
-            gridSub.Visibility = Visibility.Visible;
-
-            //
-            //var wnd = new UI.CheckManageWnd();
-            //wnd.OnClose += () => {
-            //    gridSub.Children.Clear();
-            //    gridSub.Visibility = Visibility.Collapsed;
-            //    gridMain.Visibility = Visibility.Visible;
-            //};
+            //var wnd = new UI.CameraViewWnd();
+            ////wnd.OnClose += () => {
+            ////    gridSub.Children.Clear();
+            ////    gridSub.Visibility = Visibility.Collapsed;
+            ////    gridMain.Visibility = Visibility.Visible;
+            ////};
 
             //gridSub.Children.Clear();
             //gridSub.Children.Add(wnd);
             //gridMain.Visibility = Visibility.Collapsed;
             //gridSub.Visibility = Visibility.Visible;
+
+            //
+            var wnd = new UI.CheckManageWnd();
+            wnd.OnClose += () =>
+            {
+                gridSub.Children.Clear();
+                gridSub.Visibility = Visibility.Collapsed;
+                gridMain.Visibility = Visibility.Visible;
+            };
+
+            gridSub.Children.Clear();
+            gridSub.Children.Add(wnd);
+            gridMain.Visibility = Visibility.Collapsed;
+            gridSub.Visibility = Visibility.Visible;
         }
 
         #endregion

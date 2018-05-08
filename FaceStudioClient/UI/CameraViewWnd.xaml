@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </UserControl.Resources>
-    <Grid>
+    <Grid Width="320" Height="320">
         <materialDesign:ColorZone HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed">
             <Grid>
             </Grid>
@@ -26,7 +26,7 @@
                 <ContainerUIElement3D>
                     <Viewport2DVisual3D>
                         <Viewport2DVisual3D.Geometry>
-                            <MeshGeometry3D Positions="-200 150 0  -200 -150 0  200 -150 0  200 150 0"
+                            <MeshGeometry3D Positions="-320 320 0  -320 -320 0  320 -320 0  320 320 0"
                                             TriangleIndices="0 1 2  0 2 3"
                                             TextureCoordinates="0 0  0 1  1 1  1 0" />
                         </Viewport2DVisual3D.Geometry>
@@ -45,7 +45,7 @@
                                     <TextBlock Grid.Row="0" FontSize="28" Margin="8" HorizontalAlignment="Center" Text="{Binding Camera.Name}"></TextBlock>
                                     <TextBlock Grid.Row="1" FontSize="24" Margin="8" HorizontalAlignment="Center" Text="{Binding Camera.IP}"></TextBlock>
                                     <materialDesign:PackIcon Grid.Row="2" HorizontalAlignment="Center" Margin="8" Width="96" Height="96" Kind="Camera" Visibility="{Binding HasLogo, Converter={StaticResource BooleanToVisibilityConverter}}"></materialDesign:PackIcon>
-                                    <Image Grid.Row="2" HorizontalAlignment="Center" Margin="8" Width="120" Height="90" Visibility="{Binding NoLogo, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
+                                    <Image Grid.Row="2" HorizontalAlignment="Center" Margin="8" Width="120" Height="90" Source="{Binding LogoURL}" Visibility="{Binding NoLogo, Converter={StaticResource BooleanToVisibilityConverter}}"></Image>
                                     <Grid Grid.Row="3">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition></ColumnDefinition>
@@ -62,7 +62,7 @@
                     </Viewport2DVisual3D>
                     <Viewport2DVisual3D>
                         <Viewport2DVisual3D.Geometry>
-                            <MeshGeometry3D Positions="200 150 0  200 -150 0  -200 -150 0  -200 150 0"
+                            <MeshGeometry3D Positions="320 320 0  320 -320 0  -320 -320 0  -320 320 0"
                                             TriangleIndices="0 1 2  0 2 3"
                                             TextureCoordinates="0 0  0 1  1 1  1 0" />
                         </Viewport2DVisual3D.Geometry>
