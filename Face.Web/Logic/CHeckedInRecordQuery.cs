@@ -66,6 +66,7 @@ namespace Face.Web.Logic
                     var db = new ApplicationDbContext();
                     var rep = new CheckinRecordRepository(db);
                     var repCamera = new CameraRepository(db);
+                    var repEmployee = new EmployeeRepository(db);
                     var service = new UFaceService();
                     DateTime prev = DateTime.Now;
                     while (true)
@@ -130,7 +131,10 @@ namespace Face.Web.Logic
                                         var lst = new List<CheckinRecord>();
                                         foreach (var rec in ret.records)
                                         {
-                                            lst.Add(new CheckinRecord()
+                                            //需要从数据库获取数据
+                                            var peoples = repEmployee.Get(x => x.Code != null && x.Code.CompareTo(rec.personID) == 0);
+                                            Employee employee = peoples == null || peoples.Count() == 0 ? null : peoples.ElementAt(0);
+                                            var cr = new CheckinRecord()
                                             {
                                                 InnerID = rec.ID,
                                                 IP = camera.IP,
@@ -140,7 +144,12 @@ namespace Face.Web.Logic
                                                 Type = rec.type,
                                                 State = rec.state,
                                                 CheckinTime = Utils.TimeHelper.UnixTime2DateTime(rec.time), //需要从unix时间戳转化得到
-                                            });
+                                            };
+
+                                            if (employee != null)
+                                                cr.EmployeeID = employee.ID;
+                                            //
+                                            lst.Add(cr);
                                         }
                                         rep.Add(lst.ToArray());
                                     }

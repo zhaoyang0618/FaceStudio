@@ -413,9 +413,12 @@ namespace Face.Web.Service
         {
             if (null == camera || null == camera.Logo)
                 return false;
+            var url = string.Format("http://{0}:{1}/changeLogo", camera.IP, camera.Port);
             string imgBase64 = Utils.Base64Converter.File2String(camera.Logo.FilePath);
-            var url = string.Format("http://{0}:{1}/changeLogo?pass={2}&imgBase64={3}", camera.IP, camera.Port, camera.Pwd, imgBase64);
-            var response = await web.Get(url);
+            KeyValuePair<string, string>[] data = new KeyValuePair<string, string>[2];
+            data[0] = new KeyValuePair<string, string>("pass", camera.Pwd);
+            data[1] = new KeyValuePair<string, string>("imgBase64", imgBase64);
+            var response = await web.Post(data, url);
             if (null != response)
             {
                 var ret = JsonSerializer<ServiceResult<string>>.Deserialize(response);
@@ -625,8 +628,11 @@ namespace Face.Web.Service
         //3.3.9 重启设备
         public async Task<bool> RestartDevice(Camera camera)
         {
-            var url = string.Format("http://{0}:{1}/restartDevice?pass={2}", camera.IP, camera.Port, camera.Pwd);
-            var response = await web.Get(url);
+            var url = string.Format("http://{0}:{1}/restartDevice", camera.IP, camera.Port);
+            string imgBase64 = Utils.Base64Converter.File2String(camera.Logo.FilePath);
+            KeyValuePair<string, string>[] data = new KeyValuePair<string, string>[1];
+            data[0] = new KeyValuePair<string, string>("pass", camera.Pwd);
+            var response = await web.Post(data, url);
             if (!string.IsNullOrEmpty(response))
             {
                 var ret = JsonSerializer<ServiceResult<string>>.Deserialize(response);
